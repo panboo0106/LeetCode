@@ -64,7 +64,8 @@ func InsertSort(arr []int) []int {
 // 默认选择第一个元素为pivot元素，并且在数组开头和末尾设置两个指针
 // 分别向左（向右）寻找大于（小于）pivot元素，找到后交换这两个元素
 // 并移动左右指针到对应元素，直到左右指针相遇。把该位置元素与pivot元素进行交换到此完成第一轮迭代
-// 后续把pivot元素左右划分成两部分分别设置pivot元素再做上面相同的操作
+// 此时基准元素左边元素都小于等于pivot元素右边都大于等于pivot元素
+// 后续把pivot元素左右划分成两部分分别再设置pivot元素再做上面相同的操作
 
 func QuickSort(arr []int, left, right int) []int {
 	if left >= right {
@@ -75,8 +76,10 @@ func QuickSort(arr []int, left, right int) []int {
 	// 为防止尾递归问题，判断区间范围，范围小的先执行
 	if pivot-left > right-pivot {
 		QuickSort(arr, pivot+1, right)
+		QuickSort(arr, left, pivot-1)
 	} else {
 		QuickSort(arr, left, pivot-1)
+		QuickSort(arr, pivot+1, right)
 	}
 	return arr
 }
